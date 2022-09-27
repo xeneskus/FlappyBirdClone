@@ -20,15 +20,10 @@ public class SpawnController : MonoBehaviour
         InvokeRepeating("spawn", interval, interval);
     }
 
-    
-    void Update()
-    {
-        
-    }
-
     private void spawn()
     {
         GameObject instance = Instantiate(pipesPrefab);
         instance.transform.position = new Vector2(x, Random.Range(minY, maxY));
+        instance.transform.SetParent(transform);
     }
 }
