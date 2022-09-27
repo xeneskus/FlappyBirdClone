@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class BirdController : MonoBehaviour
 {
     [SerializeField] float jumpForce;
@@ -11,9 +11,12 @@ public class BirdController : MonoBehaviour
     private int score;
 
     [SerializeField] Text scoreText;
+    [SerializeField] GameObject GameOverPanel;
 
-
-    
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -28,7 +31,23 @@ public class BirdController : MonoBehaviour
         {
             score++;
             scoreText.text = score.ToString();
+            
+
         }
               
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag=="Death")
+        {
+            Time.timeScale = 0;
+            GameOverPanel.SetActive(true);
+        }
+    }
+
+    public void restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }
